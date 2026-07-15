@@ -52,7 +52,7 @@ function renderForm() {
     label.setAttribute("for", "field-" + field.key);
     wrapper.appendChild(label);
 
-    wrapper.appendChild(buildInput(field));   // the input depends on type
+    wrapper.appendChild(buildInput(field));   
 
     const help = document.createElement("small");
     help.className = "help";
@@ -69,8 +69,8 @@ function buildInput(field) {
 
   switch (field.type) {
     case "text":
-    case "item": {                      
-      const input = document.createElement("input");  
+    case "item": {                       // "item" is plain text for now;
+      const input = document.createElement("input");  // Phase 2 adds autocomplete
       input.type = "text";
       input.id = id;
       return input;
@@ -107,7 +107,7 @@ function buildInput(field) {
       return input;
     }
     case "reward": {
-   
+     
       const group = document.createElement("div");
       group.className = "reward-row";
 
@@ -158,7 +158,7 @@ function collectQuest() {
       case "reward": {
         const item = document.getElementById(id + "-item").value.trim();
         const count = document.getElementById(id + "-count").valueAsNumber;
-        // ALWAYS an array, even with one entry — the shape the mod wants.
+      
         quest.rewards = [{ item: item, count: count }];
         break;
       }
@@ -191,7 +191,7 @@ function isPositiveInt(n) {
 }
 
 
-------------------------------------------------------------- */
+
 function buildJson(quest) {
   const out = {};
 
@@ -253,7 +253,7 @@ function downloadOutput() {
   
   let id = document.getElementById("quest-id").value.trim();
   if (!id) id = "quest";
-  const fileName = id.split("/").pop() + ".json"; 
+  const fileName = id.split("/").pop() + ".json";  // "tier1/iron_bounty" -> "iron_bounty.json"
 
   
   const blob = new Blob([output.value], { type: "application/json" });
